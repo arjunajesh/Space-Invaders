@@ -1,0 +1,92 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <canvas id="canvas" height="800" width="900"></canvas>
+        <script>
+            var canvas = document.getElementById("canvas");
+            
+            var ctx = canvas.getContext("2d");
+            var x = 200;
+            var y=200;
+            var up =false;
+            var down = false;
+            var right=false;
+            var left = false;
+            var speed = 4;
+            
+            function draw(){    
+                                ctx.beginPath();
+                ctx.rect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "lightgrey";
+                ctx.fill();
+                ctx.closePath();
+                ctx.beginPath();
+                ctx.rect(x,y,50,50);
+                ctx.fillStyle = "red";
+                ctx.fill();
+                ctx.closePath(); 
+                if(up){
+                    y = y-speed;
+                }
+                if(down){
+                    y=y+speed;
+                }
+                if(right){
+                    x = x+speed;
+                }
+                if(left){
+                    x=x-speed;
+                }
+                if(x==848){
+                    x=x-speed;
+                }
+                if(y==0){
+                    y=y+speed;
+                }
+                if(y==canvas.height-52){
+                    y=y-speed;
+                }
+                if(x==0){
+                    x = x+speed;
+                }
+                
+                
+
+            }
+            setInterval(draw, 10);
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+            function keyDownHandler(e){
+                if(e.keyCode == 38){
+                   up = true;
+                   }
+                else if(e.keyCode == 40){
+                        down = true;
+                        }
+                else if(e.keyCode == 39){
+                        right = true;
+                        }
+                else if(e.keyCode == 37){
+                    left = true;
+                }
+            }
+            function keyUpHandler(e){
+                if(e.keyCode == 38){
+                   up = false;
+                   }
+                else if(e.keyCode == 40){
+                    down = false;
+                }
+                else if(e.keyCode == 39){
+                        right = false;
+                        }
+                else if(e.keyCode == 37){
+                    left = false;
+                } 
+            }
+            
+            
+        </script>
+    </body>
+</html>

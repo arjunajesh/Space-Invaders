@@ -1,0 +1,166 @@
+<html>
+    <head>
+    </head>
+    <body>
+        
+        <canvas id="gameCanvas" height="800" width="1420"></canvas>
+        
+        <script>
+            var canvas = document.getElementById("gameCanvas");
+            var ctx = canvas.getContext("2d");
+            var x = 760;
+            var y = 700;
+            var rightPressed = false;
+            var leftPressed = false; 
+            var spacePressed = false;
+            var lasers = [];
+            var laser;
+            var lastFireTime = new Date();
+            var currentTime;
+            
+           function draw(){
+            
+            //SPACESHIP CODE
+            ctx.beginPath();
+            ctx.rect(0,0,canvas.width, canvas.height);
+            ctx.fillStyle = "black";
+            ctx.fill();
+            ctx.closePath();
+            
+            ctx.beginPath();
+            ctx.rect(x,y,5,15);
+            ctx.rect(x-5,y+15,15, 20);
+            ctx.rect(x-10,y+35,25,35);
+            ctx.rect(x,y+70,5,10);
+            ctx.rect(x-20,y+40,10,25);
+            ctx.rect(x+15,y+40,10,25);
+            ctx.rect(x-25,y+55,5,15);
+            ctx.rect(x+25,y+55,5,15);
+            ctx.rect(x+30,y+60,5,15);
+            ctx.rect(x-30,y+60,5,15);
+            ctx.rect(x-35,y+65,5,15);
+            ctx.rect(x+35,y+65,5,15);
+            ctx.rect(x-40,y+60,5,25);
+            ctx.rect(x-40,y+50,5,15);
+            ctx.rect(x+40,y+60,5,25);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.closePath();
+            
+            ctx.beginPath();
+            ctx.rect(x,y+40,5,5);
+            ctx.rect(x-5,y+45,15, 5);
+            ctx.rect(x-5,y+50,5,5);
+            ctx.rect(x+5,y+50,5,5);
+            ctx.rect(x-10,y+60,5,5);
+            ctx.rect(x-15,y+65,10,10);
+            ctx.rect(x+10,y+60,5,15);
+            ctx.rect(x+15,y+65,5,10);
+            ctx.rect(x-20,y+30,5,10);
+            ctx.rect(x+20,y+30,5,10);
+            ctx.rect(x-40,y+50,5,10);
+            ctx.rect(x+40,y+50,5,10);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.closePath();
+            
+            ctx.beginPath();
+            ctx.rect(x-15,y+40,5,5);
+            ctx.rect(x+15,y+40,5,5);
+            ctx.rect(x-20,y+45,5,5);
+            ctx.rect(x+20,y+45,5,5);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.closePath();
+               
+            //ALIEN CODE
+            ctx.beginPath();
+            ctx.rect(700,400,10,5);
+            ctx.rect(695,405,5,20);
+            ctx.rect(710,405,5,35);
+               ctx.rect(700,420,5,15);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.closePath();
+               
+            
+           
+               
+               if(leftPressed){
+                   x=x-8;
+               }
+               if(rightPressed){
+                   x=x+8;
+               }
+            if(spacePressed){
+                
+            currentTime = new Date();
+                
+                if(currentTime.getTime() - lastFireTime.getTime() > 300){
+
+                    laser = {x:x, y:y};
+                    lasers.push(laser);
+                    spacePressed = false;
+                    lastFireTime = currentTime;
+
+                   }
+            }
+                   
+
+        
+            
+            for (i = 0; i < lasers.length; i++) {
+                ctx.beginPath();
+                ctx.rect(lasers[i].x,lasers[i].y,10,10);
+                ctx.fillStyle = "red";
+                ctx.fill();
+                ctx.closePath();
+                lasers[i].y = lasers[i].y-10 ;
+                
+               if(lasers[i].y < 10) {
+                   lasers.shift();
+                }
+            }
+            
+               
+           }
+            
+
+
+            setInterval(draw, 10);
+            document.addEventListener("keydown",keyDownHandler, false);
+            document.addEventListener("keyup",keyUpHandler, false);
+
+function keyDownHandler(e) {
+    if(e.keyCode == 39) {
+        rightPressed = true;
+    }
+    else if(e.keyCode == 37) {
+        leftPressed = true;
+    }
+    else if(e.keyCode == 32){
+        spacePressed = true;
+   
+        
+    }
+}
+
+function keyUpHandler(e) {
+    if(e.keyCode == 39) {
+        rightPressed = false;
+    }
+    else if(e.keyCode == 37) {
+        leftPressed = false;
+    }
+    else if(e.keyCode == 32){
+        spacePressed = false;
+    }
+
+}
+            
+    
+
+
+        </script>
+    </body>
+</html>
